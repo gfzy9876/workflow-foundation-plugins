@@ -1,0 +1,4 @@
+interface:
+  display_name: "Trace Emit"
+  short_description: "Structured atomic trace event design"
+  default_prompt: "Use $trace-emit to design or validate structured trace emission events."

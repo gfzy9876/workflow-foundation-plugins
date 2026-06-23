@@ -1,0 +1,41 @@
+{
+  "name": "workflow-foundation",
+  "version": "0.1.0",
+  "description": "Reusable workflow foundation skills for safe git commits, browser evidence collection, deterministic workflow runtime state, and structured trace emission.",
+  "author": {
+    "name": "Ying Zhang"
+  },
+  "homepage": "https://example.com/workflow-foundation",
+  "repository": "https://example.com/workflow-foundation",
+  "license": "Private",
+  "keywords": [
+    "workflow",
+    "git",
+    "chrome-mcp",
+    "browser",
+    "commit",
+    "runtime",
+    "trace"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Workflow Foundation",
+    "shortDescription": "Reusable workflow-layer skills",
+    "longDescription": "Workflow Foundation provides reusable skills that guide Codex to use existing git and Chrome MCP command-line tools consistently, define deterministic workflow runtime behavior, and emit structured trace records for workflow execution evidence.",
+    "developerName": "Ying Zhang",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://example.com/",
+    "privacyPolicyURL": "https://example.com/privacy",
+    "termsOfServiceURL": "https://example.com/terms",
+    "defaultPrompt": [
+      "Use the workflow foundation skills to commit safely, collect browser evidence, run deterministic workflow state transitions, and emit structured workflow traces."
+    ],
+    "brandColor": "#0F766E",
+    "screenshots": []
+  }
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Git Commit Convention"
+  short_description: "Standardize safe git commits"
+  default_prompt: "Use $git-commit-convention to commit the current repo with the required title and numbered change description format."

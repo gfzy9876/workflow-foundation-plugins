@@ -1,0 +1,4 @@
+interface:
+  display_name: "Chrome MCP Workflow"
+  short_description: "Use Chrome MCP CLI for page testing"
+  default_prompt: "Use $chrome-mcp-workflow to open a page, inspect state, interact with elements, and collect browser evidence."
