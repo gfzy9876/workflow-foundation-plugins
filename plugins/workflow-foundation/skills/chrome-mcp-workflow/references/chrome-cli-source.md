@@ -2,25 +2,30 @@
 
 This skill intentionally reuses the existing command-line Chrome MCP wrapper. It does not implement a new tool.
 
-## Existing Source
+## CLI Resolution
 
-Primary source:
+This skill uses an existing Chrome CLI wrapper. Resolve it on the current machine instead of assuming a fixed absolute path.
 
-```bash
-/Users/yingzhang/Desktop/TrystOfStars/.cursor/skills/chrome-cli/SKILL.md
-```
-
-Executable:
+Preferred command when it is already on `PATH`:
 
 ```bash
-/Users/yingzhang/Desktop/TrystOfStars/.cursor/skills/chrome-cli/bin/chrome-cli.mjs
+chrome-cli <command> [flags]
 ```
 
-Fallback invocation:
+When `chrome-cli` is not on `PATH`, set `CHROME_CLI` to a local `chrome-cli.mjs` path and call it through Node:
 
 ```bash
-node /Users/yingzhang/Desktop/TrystOfStars/.cursor/skills/chrome-cli/bin/chrome-cli.mjs <command> [flags]
+node "$CHROME_CLI" <command> [flags]
 ```
+
+Common local candidates:
+
+- `$PWD/.cursor/skills/chrome-cli/bin/chrome-cli.mjs`
+- parent directories' `.cursor/skills/chrome-cli/bin/chrome-cli.mjs`
+- `$HOME/.cursor/skills/chrome-cli/bin/chrome-cli.mjs`
+- `$HOME/Desktop/TrystOfStars/.cursor/skills/chrome-cli/bin/chrome-cli.mjs`
+
+If none exists, stop and report that the Chrome CLI source is not installed on this machine.
 
 ## Important Existing Concepts
 
@@ -65,16 +70,16 @@ Some commands silently ignore file path parameters if the extension is wrong.
 
 ## Original Reference Files
 
-Open these from the original source only when needed:
+Open these from the resolved local Chrome CLI source only when needed:
 
-- `/Users/yingzhang/Desktop/TrystOfStars/.cursor/skills/chrome-cli/references/daemon.md`
-- `/Users/yingzhang/Desktop/TrystOfStars/.cursor/skills/chrome-cli/references/take-snapshot.md`
-- `/Users/yingzhang/Desktop/TrystOfStars/.cursor/skills/chrome-cli/references/take-screenshot.md`
-- `/Users/yingzhang/Desktop/TrystOfStars/.cursor/skills/chrome-cli/references/fill-form.md`
-- `/Users/yingzhang/Desktop/TrystOfStars/.cursor/skills/chrome-cli/references/network-requests.md`
-- `/Users/yingzhang/Desktop/TrystOfStars/.cursor/skills/chrome-cli/references/evaluate-script.md`
-- `/Users/yingzhang/Desktop/TrystOfStars/.cursor/skills/chrome-cli/references/performance.md`
-- `/Users/yingzhang/Desktop/TrystOfStars/.cursor/skills/chrome-cli/references/emulate.md`
+- `references/daemon.md`
+- `references/take-snapshot.md`
+- `references/take-screenshot.md`
+- `references/fill-form.md`
+- `references/network-requests.md`
+- `references/evaluate-script.md`
+- `references/performance.md`
+- `references/emulate.md`
 
 ## Evidence Pattern
 

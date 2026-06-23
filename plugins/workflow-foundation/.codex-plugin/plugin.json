@@ -1,6 +1,6 @@
 {
   "name": "workflow-foundation",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Reusable workflow foundation skills for safe git commits, browser evidence collection, deterministic workflow runtime state, and structured trace emission.",
   "author": {
     "name": "Ying Zhang"

@@ -7,16 +7,27 @@ description: "Use when Codex should operate an existing Chrome MCP/Chrome CLI br
 
 Use the existing Chrome MCP command-line surface. Do not create a new browser wrapper, new MCP server, or new tool API.
 
-On this machine the reusable CLI source is:
+Resolve the CLI at runtime instead of assuming a machine-specific path:
+
+1. Use `chrome-cli` when it is available in `PATH`.
+2. Use `$CHROME_CLI` when the environment points to an executable or `chrome-cli.mjs`.
+3. Otherwise search likely local skill locations such as:
+   - `$PWD/.cursor/skills/chrome-cli/bin/chrome-cli.mjs`
+   - parent directories' `.cursor/skills/chrome-cli/bin/chrome-cli.mjs`
+   - `$HOME/.cursor/skills/chrome-cli/bin/chrome-cli.mjs`
+   - `$HOME/Desktop/TrystOfStars/.cursor/skills/chrome-cli/bin/chrome-cli.mjs`
+4. If no CLI is found, stop and report that the Chrome CLI source is not installed on this machine.
+
+When the resolved CLI is a `.mjs` file, call it with Node:
 
 ```bash
-/Users/yingzhang/Desktop/TrystOfStars/.cursor/skills/chrome-cli/bin/chrome-cli.mjs
+node "$CHROME_CLI" <command> [flags]
 ```
 
-Use `chrome-cli` if the shell already has an alias. If not, call:
+When it is an executable command, call it directly:
 
 ```bash
-node /Users/yingzhang/Desktop/TrystOfStars/.cursor/skills/chrome-cli/bin/chrome-cli.mjs <command> [flags]
+chrome-cli <command> [flags]
 ```
 
 ## Basic Flow
@@ -27,7 +38,7 @@ node /Users/yingzhang/Desktop/TrystOfStars/.cursor/skills/chrome-cli/bin/chrome-
 chrome-cli daemon status
 ```
 
-If `chrome-cli` is not found, use the `node .../chrome-cli.mjs` form above. If the daemon is stopped and the user asked to operate Chrome, start it. Prefer isolated profile for automation:
+If `chrome-cli` is not found, resolve `$CHROME_CLI` or a local `chrome-cli.mjs` and use the `node "$CHROME_CLI" ...` form above. If the daemon is stopped and the user asked to operate Chrome, start it. Prefer isolated profile for automation:
 
 ```bash
 chrome-cli daemon start -- --isolated
