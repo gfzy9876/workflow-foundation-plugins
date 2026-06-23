@@ -1,27 +1,37 @@
 {
   "name": "workflow-foundation",
-  "version": "0.1.1",
-  "description": "Reusable workflow foundation skills for safe git commits, browser evidence collection, deterministic workflow runtime state, and structured trace emission.",
+  "version": "0.1.3",
+  "description": "面向 Codex 工作流与 TrystOfStars 运维场景的可复用技能集，覆盖安全提交、浏览器证据采集、工作流运行态、结构化 trace、CloudRun 日志、admin 部署和飞书 CLI 工作流。",
   "author": {
     "name": "Ying Zhang"
   },
-  "homepage": "https://example.com/workflow-foundation",
-  "repository": "https://example.com/workflow-foundation",
+  "homepage": "https://gitee.com/gfzy9876/workflow-foundation-plugins",
+  "repository": "https://gitee.com/gfzy9876/workflow-foundation-plugins",
   "license": "Private",
   "keywords": [
     "workflow",
+    "工作流",
     "git",
+    "提交",
     "chrome-mcp",
     "browser",
+    "浏览器",
     "commit",
     "runtime",
-    "trace"
+    "运行态",
+    "trace",
+    "链路追踪",
+    "tryst",
+    "cloudbase",
+    "cloudrun",
+    "lark",
+    "飞书"
   ],
   "skills": "./skills/",
   "interface": {
-    "displayName": "Workflow Foundation",
-    "shortDescription": "Reusable workflow-layer skills",
-    "longDescription": "Workflow Foundation provides reusable skills that guide Codex to use existing git and Chrome MCP command-line tools consistently, define deterministic workflow runtime behavior, and emit structured trace records for workflow execution evidence.",
+    "displayName": "工作流基础技能集",
+    "shortDescription": "工作流与 Tryst 运维技能",
+    "longDescription": "工作流基础技能集为 Codex 提供一组可复用的本地技能，用于稳定执行现有 git 与 Chrome MCP 命令行流程，定义确定性的工作流运行态行为，输出结构化 trace 记录，并处理 TrystOfStars 的 express_star CloudRun 日志、admin 开发环境部署和飞书 CLI 证据同步等运维工作。",
     "developerName": "Ying Zhang",
     "category": "Developer Tools",
     "capabilities": [
@@ -29,11 +39,11 @@
       "Read",
       "Write"
     ],
-    "websiteURL": "https://example.com/",
-    "privacyPolicyURL": "https://example.com/privacy",
-    "termsOfServiceURL": "https://example.com/terms",
+    "websiteURL": "https://gitee.com/gfzy9876/workflow-foundation-plugins",
+    "privacyPolicyURL": "https://gitee.com/gfzy9876/workflow-foundation-plugins",
+    "termsOfServiceURL": "https://gitee.com/gfzy9876/workflow-foundation-plugins",
     "defaultPrompt": [
-      "Use the workflow foundation skills to commit safely, collect browser evidence, run deterministic workflow state transitions, and emit structured workflow traces."
+      "使用工作流基础技能集来安全提交代码、采集浏览器证据、执行确定性的工作流状态迁移、输出结构化工作流 trace，并处理 TrystOfStars 的 CloudRun、admin 部署或飞书 CLI 工作流。"
     ],
     "brandColor": "#0F766E",
     "screenshots": []

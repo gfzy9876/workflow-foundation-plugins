@@ -1,0 +1,4 @@
+interface:
+  display_name: "Admin Dev Deploy"
+  short_description: "部署 Tryst admin 到 CloudBase 开发托管"
+  default_prompt: "使用 $admin-dev-deploy 部署 Tryst admin 开发托管，并验证目标边界。"

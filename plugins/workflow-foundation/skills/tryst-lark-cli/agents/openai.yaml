@@ -1,0 +1,4 @@
+interface:
+  display_name: "Tryst Lark CLI"
+  short_description: "Run Tryst business workflows through lark-cli"
+  default_prompt: "Use $tryst-lark-cli to sync Tryst release, audit, or status information into Lark documents or sheets."
