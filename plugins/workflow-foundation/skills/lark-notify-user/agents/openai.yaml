@@ -1,0 +1,4 @@
+interface:
+  display_name: "飞书用户通知"
+  short_description: "让智能体向飞书用户或会话发送通知"
+  default_prompt: "使用 $lark-notify-user 给用户发送一条简洁的飞书/Lark 通知。"
