@@ -1,0 +1,25 @@
+{
+  "name": "workflow-foundation",
+  "displayName": "工作流基础技能集",
+  "description": "TrystOfStars 业务工作流技能集：安全 git 提交、Chrome MCP 浏览器证据采集、CloudRun 部署与日志、云函数部署、admin 部署、飞书通知、结构化 trace、工作流运行态。Use when committing code, deploying express_star, diagnosing CloudRun logs, capturing browser evidence, sending Lark notifications, or managing workflow state.",
+  "version": "0.1.3",
+  "author": {
+    "name": "Ying Zhang"
+  },
+  "homepage": "https://github.com/gfzy9876/workflow-foundation-plugins",
+  "repository": "https://github.com/gfzy9876/workflow-foundation-plugins",
+  "license": "Private",
+  "keywords": [
+    "workflow",
+    "git",
+    "commit",
+    "chrome-mcp",
+    "cloudrun",
+    "cloudfunctions",
+    "lark",
+    "飞书",
+    "trace",
+    "tryst"
+  ],
+  "skills": "./plugins/workflow-foundation/skills/"
+}
