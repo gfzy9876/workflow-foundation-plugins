@@ -8,6 +8,8 @@
 - `trace-emit`：结构化 trace emit schema、事件语义、工具实现与测试。
 - `git-commit-convention`：安全提交与提交信息约定。
 - `chrome-mcp-workflow`：Chrome MCP/CLI 浏览器操作流程约定。
+- `express-star-cloudrun-deploy`：`express_star` CloudRun 云托管主服务部署流程。
+- `express-star-cloudfunctions-deploy`：`express_star` 云开发云函数部署流程。
 
 在其他电脑上安装 marketplace：
 

@@ -1,0 +1,4 @@
+interface:
+  display_name: "express_star CloudRun 部署"
+  short_description: "部署 express_star 云托管主服务"
+  default_prompt: "Use $express-star-cloudrun-deploy to deploy the express_star CloudRun backend service."

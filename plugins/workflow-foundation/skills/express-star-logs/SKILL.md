@@ -12,7 +12,7 @@ Use this skill for read-only backend operations after an `express_star` deploy o
 - Target repo: `$HOME/Desktop/TrystOfStars/express_star`
 - Runtime: CloudBase CloudRun container service, not a WeChat cloud function.
 - Default dev service: env `dev-8g923tapc831bc98`, service `express-star`, port `80`.
-- Deploy entrypoint, when the user explicitly asks to deploy: `npm run deploy:dev`.
+- Deploy entrypoint, when the user explicitly asks to deploy: use `express-star-cloudrun-deploy`.
 - Cloud function relay `star-virtual-notify-relay` is adjacent infrastructure; use it only when diagnosing virtual-payment callback forwarding.
 
 Do not use `tcb fn log` for this service. It is for cloud functions, not the container CloudRun service.
@@ -73,7 +73,7 @@ curl -i "$DEFAULT_DOMAIN/api/stars/orders/virtual/config-check"
 
 Treat these as different layers:
 
-- Submission: `npm run deploy:dev` / `tcb cloudrun deploy` completed.
+- Submission: `express-star-cloudrun-deploy` / `tcb cloudrun deploy` completed.
 - Deploy record: `DescribeCloudRunDeployRecord` latest record is `normal`, has traffic, and has a useful `RunId`.
 - Runtime process: `DescribeCloudRunProcessLog` shows container/service creation and no startup crash.
 - Live traffic: public `/health` returns HTTP 200 with `status: healthy` and fresh service metadata.

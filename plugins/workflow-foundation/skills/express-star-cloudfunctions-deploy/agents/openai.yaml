@@ -1,0 +1,4 @@
+interface:
+  display_name: "express_star 云函数部署"
+  short_description: "复用 express_star 云开发云函数部署流程"
+  default_prompt: "Use $express-star-cloudfunctions-deploy to deploy express_star CloudBase cloud functions."
