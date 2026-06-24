@@ -9,7 +9,7 @@ Use this skill for read-only backend operations after an `express_star` deploy o
 
 ## Boundaries
 
-- Target repo: `/Users/yingzhang/Desktop/TrystOfStars/express_star`
+- Target repo: `$HOME/Desktop/TrystOfStars/express_star`
 - Runtime: CloudBase CloudRun container service, not a WeChat cloud function.
 - Default dev service: env `dev-8g923tapc831bc98`, service `express-star`, port `80`.
 - Deploy entrypoint, when the user explicitly asks to deploy: `npm run deploy:dev`.
@@ -22,7 +22,7 @@ Do not use `tcb fn log` for this service. It is for cloud functions, not the con
 1. Enter the backend repo.
 
 ```bash
-cd /Users/yingzhang/Desktop/TrystOfStars/express_star
+cd "$HOME/Desktop/TrystOfStars/express_star"
 ```
 
 2. Confirm the current CloudBase CLI shape before using unfamiliar flags.
@@ -40,14 +40,17 @@ tcb cloudrun list --envId dev-8g923tapc831bc98 --serviceName express-star
 
 4. Query CloudRun service detail and deploy records with the bundled read-only helper.
 
+Resolve `scripts/tcbr-cloudrun-read.cjs` relative to this Skill directory; do not assume a machine-specific plugin checkout path.
+
 ```bash
-node /Users/yingzhang/plugins/workflow-foundation-plugins/plugins/workflow-foundation/skills/express-star-logs/scripts/tcbr-cloudrun-read.cjs --action status
+HELPER="<path-to-this-skill>/scripts/tcbr-cloudrun-read.cjs"
+node "$HELPER" --action status
 ```
 
 5. If a deploy record has a `RunId`, inspect process logs.
 
 ```bash
-node /Users/yingzhang/plugins/workflow-foundation-plugins/plugins/workflow-foundation/skills/express-star-logs/scripts/tcbr-cloudrun-read.cjs --action logs --run-id <RunId>
+node "$HELPER" --action logs --run-id <RunId>
 ```
 
 If `--run-id` is omitted, the helper tries to use the newest deploy record's `RunId`.

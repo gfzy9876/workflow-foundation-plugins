@@ -11,15 +11,15 @@ Use this skill as the Tryst business layer over `lark-cli`. It routes a Tryst ou
 
 Before running `lark-cli`, read:
 
-- `/Users/yingzhang/.agents/skills/lark-shared/SKILL.md`
+- `$HOME/.agents/skills/lark-shared/SKILL.md`
 
 Then route by target:
 
-- Docs or document search: `/Users/yingzhang/.agents/skills/lark-doc/SKILL.md`
-- Sheets or tabular records: `/Users/yingzhang/.agents/skills/lark-sheets/SKILL.md`
-- Drive files, permissions, comments, imports, or title changes: `/Users/yingzhang/.agents/skills/lark-drive/SKILL.md`
-- Wiki node organization: `/Users/yingzhang/.agents/skills/lark-wiki/SKILL.md`
-- Base records or structured operational tables: `/Users/yingzhang/.agents/skills/lark-base/SKILL.md`
+- Docs or document search: `$HOME/.agents/skills/lark-doc/SKILL.md`
+- Sheets or tabular records: `$HOME/.agents/skills/lark-sheets/SKILL.md`
+- Drive files, permissions, comments, imports, or title changes: `$HOME/.agents/skills/lark-drive/SKILL.md`
+- Wiki node organization: `$HOME/.agents/skills/lark-wiki/SKILL.md`
+- Base records or structured operational tables: `$HOME/.agents/skills/lark-base/SKILL.md`
 
 Load only the target atomic skill needed for the current request.
 

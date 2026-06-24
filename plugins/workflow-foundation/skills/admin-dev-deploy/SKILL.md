@@ -9,7 +9,7 @@ Use this skill to deploy the TrystOfStars admin frontend to CloudBase dev hostin
 
 ## Boundaries
 
-- Target repo: `/Users/yingzhang/Desktop/TrystOfStars/admin`
+- Target repo: `$HOME/Desktop/TrystOfStars/admin`
 - Default deploy: `npm run deploy`
 - Equivalent dev deploy: `npm run deploy:dev`
 - Dev build command: `npm run build:dev`
@@ -25,7 +25,7 @@ Do not run `deploy:release` unless the user explicitly says release, production,
 1. Enter the admin repo.
 
 ```bash
-cd /Users/yingzhang/Desktop/TrystOfStars/admin
+cd "$HOME/Desktop/TrystOfStars/admin"
 ```
 
 2. Inspect the current package scripts before deploying if this is the first admin deploy in the turn.

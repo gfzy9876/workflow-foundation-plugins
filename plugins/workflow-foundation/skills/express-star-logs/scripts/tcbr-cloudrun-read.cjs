@@ -4,7 +4,7 @@ const os = require("os");
 const path = require("path");
 const crypto = require("crypto");
 
-const DEFAULT_REPO = "/Users/yingzhang/Desktop/TrystOfStars/express_star";
+const DEFAULT_REPO = path.join(os.homedir(), "Desktop", "TrystOfStars", "express_star");
 const DEFAULT_REGION = "ap-shanghai";
 const SENSITIVE_KEY_RE = /(secret|token|key|password|credential|private|envparams)/i;
 
