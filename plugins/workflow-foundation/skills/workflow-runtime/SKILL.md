@@ -59,6 +59,18 @@ scripts/runtime.ts
 - in-memory store；
 - 最小 agent-runtime loop 示例。
 
+## 相关运行态适配 Skill
+
+`workflow-runtime` 保持通用 runtime definition，不承载具体项目的一次性 workflow 模板。需要执行 TrystOfStars 小程序真实运行时验证时，使用同一 `workflow-foundation` 插件内的 `mini-runtime` suite：
+
+- `mini-runtime`：小程序运行时验证根入口。
+- `mini-runtime-preview`：WeChat DevTools 会话、编译 readiness、端口和核心排障。
+- `mini-runtime-smoke`：页面路由、selector、可选点击、截图和 pageStack。
+- `mini-runtime-console-watch`：console/exception 捕获和 JSONL 证据。
+- `mini-runtime-flow`：checkpoint-driven 多步骤用户流程验证。
+- `mini-runtime-state-inspect`：current page、page data、storage 和状态断言。
+- `mini-runtime-cloudrun-rum`：CloudRun client 日志、trace id 和 RUM debug state。
+
 ## MVP 约束
 
 不要把某次任务专属的 workflow 模板、单次任务 output schema，或 agent 自行声明的状态机放进这个 definition。它们要么属于 agent 当前执行上下文，要么在沉淀成确定性规则后进入 runtime 代码。
