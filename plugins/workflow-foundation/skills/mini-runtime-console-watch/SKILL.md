@@ -9,18 +9,17 @@ description: 当小程序运行时验证需要通过 miniprogram-automator 捕�
 
 ## 仓库常量
 
-- 小程序源码目录：`$HOME/Desktop/TrystOfStars/mini/miniprogram`
-- WeChat DevTools 项目根目录：`$HOME/Desktop/TrystOfStars/mini`
-- 当前 smoke wrapper：`$HOME/Desktop/TrystOfStars/mini/miniprogram/.agents/scripts/automator-smoke.mjs`
-- canonical script：`$HOME/Desktop/TrystOfStars/mini/miniprogram/.agents/scripts/automator-smoke.mjs`
-- 项目 console 日志入口：`$HOME/Desktop/TrystOfStars/mini/miniprogram/utils/track/log.ts`
+- 小程序源码目录：`<mini-project-root>/miniprogram`，以当前 cwd、`--project-path` 或 `MINIPROGRAM_PROJECT_PATH` 解析。
+- WeChat DevTools 项目根目录：包含 `project.config.json` 的 `<mini-project-root>`。
+- 当前 smoke script：`node <mini-runtime-preview-skill-dir>/scripts/automator-smoke.mjs`
+- 项目 console 日志入口：`<mini-project-root>/miniprogram/utils/track/log.ts`
 
 ## 能力状态
 
 - 当前已接入复用 CLI：`mini-runtime-suite.mjs` 会写 `console.jsonl` 和 `exception.jsonl`。
 - 单页 `automator-smoke.mjs` 仍未接入日志参数。
 - 项目日志走 console，且只在 develop 环境输出。
-- 目标 CLI 名称：`mini-preview logs`。这是未来统一命令名；当前项目本地入口是 `node .agents/scripts/mini-runtime-suite.mjs`。
+- 目标 CLI 名称：`mini-preview logs`。这是未来统一命令名；当前入口是 workflow-foundation skill 自带的 `mini-runtime-suite.mjs`。
 
 ## 工作流
 
@@ -34,7 +33,8 @@ description: 当小程序运行时验证需要通过 miniprogram-automator 捕�
 当前项目本地可执行入口：
 
 ```bash
-node .agents/scripts/mini-runtime-suite.mjs \
+node <mini-runtime-skill-dir>/scripts/mini-runtime-suite.mjs \
+  --project-path <mini-project-root> \
   --port <fixed-auto-port> \
   --artifact-dir /tmp/<meaningful-run-dir> \
   --fail-on-exception \

@@ -19,15 +19,20 @@ description: 当需要用 WeChat Developer Tools 和 miniprogram-automator 验�
 
 ## 仓库常量
 
-- 小程序源码目录：`$HOME/Desktop/TrystOfStars/mini/miniprogram`
-- WeChat DevTools 项目根目录：`$HOME/Desktop/TrystOfStars/mini`
-- skill wrapper：`node .agents/scripts/automator-smoke.mjs`
-- canonical implementation：`.agents/scripts/automator-smoke.mjs`
-- 复用会话 wrapper：`node .agents/scripts/mini-runtime-suite.mjs`
-- 复用会话 canonical implementation：`.agents/scripts/mini-runtime-suite.mjs`
+- 小程序源码目录：`<mini-project-root>/miniprogram`，以当前 cwd、`--project-path` 或 `MINIPROGRAM_PROJECT_PATH` 解析，不硬编码用户目录。
+- WeChat DevTools 项目根目录：包含 `project.config.json` 的 `<mini-project-root>`。
+- 单页 smoke implementation：`node <mini-runtime-preview-skill-dir>/scripts/automator-smoke.mjs`。
+- 复用会话 implementation：`node <mini-runtime-skill-dir>/scripts/mini-runtime-suite.mjs`。
 - 默认 DevTools CLI：`/Applications/wechatwebdevtools.app/Contents/MacOS/cli`
 - DevTools 编译快捷键 app id：`com.tencent.webplusdevtools`
 - 已验证工具组合：`miniprogram-automator@0.12.1`、DevTools `2.01.2602282`、Mini Program SDK `3.14.2`
+
+## 项目定位与依赖
+
+- 从目标 mini 项目根或 `miniprogram` 目录运行时，脚本会自动识别上级 `project.config.json`。
+- 如果当前 cwd 不在目标项目内，必须传 `--project-path <mini-project-root>` 或设置 `MINIPROGRAM_PROJECT_PATH=<mini-project-root>`，例如 `/Users/yingshen/.openclaw/workspace-wx-frontend/project/mini`。
+- `miniprogram-automator` 需要能从 `--sdk-root`、当前 cwd、`<mini-project-root>/miniprogram` 或 `<mini-project-root>` 解析；目标项目没有该 npm 包时，先在项目内安装或传 `MINIPROGRAM_AUTOMATOR_SDK_ROOT`。
+- runtime CLI 已随 workflow-foundation skill 分发，不要求目标项目存在 `.agents/scripts/automator-smoke.mjs`。
 
 ## 工作流
 
@@ -48,7 +53,8 @@ lsof -nP -a -c wechatweb -iTCP -sTCP:LISTEN
 复用会话模板：
 
 ```bash
-node .agents/scripts/mini-runtime-suite.mjs \
+node <mini-runtime-skill-dir>/scripts/mini-runtime-suite.mjs \
+  --project-path <mini-project-root> \
   --port <fixed-auto-port> \
   --artifact-dir /tmp/<meaningful-run-dir> \
   --timeout 150000 \
@@ -60,7 +66,8 @@ node .agents/scripts/mini-runtime-suite.mjs \
 单页 smoke 模板：
 
 ```bash
-node .agents/scripts/automator-smoke.mjs \
+node <mini-runtime-preview-skill-dir>/scripts/automator-smoke.mjs \
+  --project-path <mini-project-root> \
   --ide-port <devtools-service-port> \
   --port <fixed-auto-port> \
   --page /pages/<page>/<page> \
@@ -75,7 +82,8 @@ node .agents/scripts/automator-smoke.mjs \
 本仓库已验证的 coin-toss 命令：
 
 ```bash
-node .agents/scripts/automator-smoke.mjs \
+node <mini-runtime-preview-skill-dir>/scripts/automator-smoke.mjs \
+  --project-path <mini-project-root> \
   --ide-port 52427 \
   --port 19540 \
   --timeout 150000 \
@@ -88,7 +96,8 @@ node .agents/scripts/automator-smoke.mjs \
 通过 skill wrapper 的等价命令：
 
 ```bash
-node .agents/scripts/automator-smoke.mjs \
+node <mini-runtime-preview-skill-dir>/scripts/automator-smoke.mjs \
+  --project-path <mini-project-root> \
   --ide-port 52427 \
   --port 19540 \
   --timeout 150000 \

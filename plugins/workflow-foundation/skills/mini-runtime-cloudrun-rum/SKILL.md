@@ -9,11 +9,11 @@ description: 当小程序运行时预览需要验证 CloudRun 请求行为、tra
 
 ## 仓库常量
 
-- 小程序源码目录：`$HOME/Desktop/TrystOfStars/mini/miniprogram`
-- WeChat DevTools 项目根目录：`$HOME/Desktop/TrystOfStars/mini`
-- 当前 smoke wrapper：`$HOME/Desktop/TrystOfStars/mini/miniprogram/.agents/scripts/automator-smoke.mjs`
-- CloudRun client 日志：`$HOME/Desktop/TrystOfStars/mini/miniprogram/utils/cloudRunClient.ts`
-- RUM 初始化/debug 代码：`$HOME/Desktop/TrystOfStars/mini/miniprogram/app.ts` 和 `$HOME/Desktop/TrystOfStars/mini/miniprogram/utils/track/rum.ts`
+- 小程序源码目录：`<mini-project-root>/miniprogram`，以当前 cwd、`--project-path` 或 `MINIPROGRAM_PROJECT_PATH` 解析。
+- WeChat DevTools 项目根目录：包含 `project.config.json` 的 `<mini-project-root>`。
+- 当前 smoke script：`node <mini-runtime-preview-skill-dir>/scripts/automator-smoke.mjs`
+- CloudRun client 日志：`<mini-project-root>/miniprogram/utils/cloudRunClient.ts`
+- RUM 初始化/debug 代码：`<mini-project-root>/miniprogram/app.ts` 和 `<mini-project-root>/miniprogram/utils/track/rum.ts`
 
 ## 能力状态
 

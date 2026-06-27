@@ -26,13 +26,13 @@ description: 当用户明确要求 TrystOfStars 小程序真实环境预览、�
 
 ## 当前 CLI 状态
 
-- 当前可直接执行的 agent-loop workflow CLI：`node .agents/scripts/mini-runtime-agent-loop.mjs`。
+- 当前可直接执行的 agent-loop workflow CLI：`node <mini-runtime-skill-dir>/scripts/mini-runtime-agent-loop.mjs`。
 - 该 workflow CLI 通过 stdin JSONL 接收 agent 每一步决策，支持 `routeMap`、`reLaunch`、`wait`、`waitText`、`tap`、`tapText`、`input`、`confirmModal`、`back`、`screenshot`、`pageStack`、`currentPage`、`readData`、`readStorage`、`assertStorage`、`assertPageStack`、`sleep`、`compileShortcut`、`status`、`finalize`，并强制写 `run-trace.jsonl`、`summary.json`、console/exception 日志。
 - 该 workflow CLI 支持 `--recipe <path>` 直接运行 JSON/JSONL 步骤；适合由 agent 读源码后生成一次性业务 flow recipe，并保留标准 trace，而不是临时写业务专用 probe 脚本。
 - `compileShortcut` 已接入 runtime readiness：优先触发 DevTools 菜单“工具 > 编译”，失败时 fallback 到 Cmd+B，最多重试 3 次；通过 `systemInfo/pageStack` 判断 runtime 是否可用，并把 compile log evidence 作为弱辅助字段 `logEvidenceObserved` 输出。当前 SDK 没有正式 compile-complete API，不要把日志正则当强证明。
-- 当前可直接执行的复用会话 CLI：`node .agents/scripts/mini-runtime-suite.mjs`。
+- 当前可直接执行的复用会话 CLI：`node <mini-runtime-skill-dir>/scripts/mini-runtime-suite.mjs`。
 - 该 CLI 已支持单 DevTools 会话内复用 automator websocket，连续跑多页面 smoke、可选 tap、截图、summary JSON、console JSONL、exception JSONL。
-- 单页兼容脚本仍是：`node .agents/scripts/automator-smoke.mjs`。
+- 单页兼容脚本在 `mini-runtime-preview` skill 中：`node <mini-runtime-preview-skill-dir>/scripts/automator-smoke.mjs`。
 - `mini-preview state`、`mini-preview action`、`mini-preview cloudrun` 仍是后续统一命令契约，还不是当前仓库里已经存在的命令。
 - 当用户要求尚未接入 CLI 的能力时，要明确说明“SDK 支持/文档已定义/CLI 未接入”，不能伪装成已完整验证。
 
@@ -40,9 +40,16 @@ description: 当用户明确要求 TrystOfStars 小程序真实环境预览、�
 
 1. 先看当前 diff，判断需要验证哪个页面、selector、交互或日志路径。不要回滚无关 dirty 文件。
 2. 选择最小子 skill 组合；多页面验证优先用复用 CLI，单页问题可用单页 smoke。
-3. 从 `$HOME/Desktop/TrystOfStars/mini/miniprogram` 执行当前可用命令。
+3. 从当前小程序项目根或 `miniprogram` 目录执行命令；如果 cwd 不在项目内，显式传 `--project-path <mini-project-root>` 或设置 `MINIPROGRAM_PROJECT_PATH=<mini-project-root>`。不要假设项目一定在 `$HOME/Desktop/TrystOfStars/mini`。
 4. 证据必须包含可核查输出：截图、pageStack、selector 命中、可选 tap、`summary.json`、`console.jsonl` 或 `exception.jsonl`。
 5. 最终报告要区分验证层级：build/typecheck、DevTools runtime、截图可见效果、console/state、服务端日志。
+
+## 项目定位与依赖
+
+- 目标项目根目录以包含 `project.config.json` 的目录为准；脚本会从当前 cwd 或上一级自动识别，也可用 `--project-path` / `MINIPROGRAM_PROJECT_PATH` 覆盖。
+- 源码目录通常是 `<mini-project-root>/miniprogram`，但不要硬编码到某个用户目录。
+- runtime CLI 由本 workflow-foundation skill 自带，不要求目标项目存在 `.agents/scripts/`。
+- `miniprogram-automator` 必须能从 `--sdk-root`、当前 cwd、`<mini-project-root>/miniprogram` 或 `<mini-project-root>` 解析；目标项目未安装时，先在项目内安装或传入已有 SDK root。
 
 ## 验证策略
 
@@ -65,9 +72,10 @@ description: 当用户明确要求 TrystOfStars 小程序真实环境预览、�
 最小 workflow CLI 启动方式：
 
 ```bash
-node .agents/scripts/mini-runtime-agent-loop.mjs \
+node <mini-runtime-skill-dir>/scripts/mini-runtime-agent-loop.mjs \
   --goal '<runtime 验收目标>' \
   --strategy business-flow \
+  --project-path <mini-project-root> \
   --ide-port <devtools-service-port> \
   --port <fixed-auto-port> \
   --artifact-dir /tmp/<meaningful-run-dir>
@@ -114,7 +122,8 @@ node .agents/scripts/mini-runtime-agent-loop.mjs \
 默认多页面矩阵：
 
 ```bash
-node .agents/scripts/mini-runtime-suite.mjs \
+node <mini-runtime-skill-dir>/scripts/mini-runtime-suite.mjs \
+  --project-path <mini-project-root> \
   --port <fixed-auto-port> \
   --artifact-dir /tmp/<meaningful-run-dir> \
   --timeout 150000 \
@@ -126,7 +135,8 @@ node .agents/scripts/mini-runtime-suite.mjs \
 自定义页面：
 
 ```bash
-node .agents/scripts/mini-runtime-suite.mjs \
+node <mini-runtime-skill-dir>/scripts/mini-runtime-suite.mjs \
+  --project-path <mini-project-root> \
   --port <fixed-auto-port> \
   --no-default-cases \
   --case 'profile|/pages/profile/profile|.profile-page|no-tap' \
@@ -137,7 +147,8 @@ node .agents/scripts/mini-runtime-suite.mjs \
 常用日志策略：
 
 ```bash
-node .agents/scripts/mini-runtime-suite.mjs \
+node <mini-runtime-skill-dir>/scripts/mini-runtime-suite.mjs \
+  --project-path <mini-project-root> \
   --port <fixed-auto-port> \
   --fail-on-exception \
   --fail-on-console error \
@@ -147,7 +158,8 @@ node .agents/scripts/mini-runtime-suite.mjs \
 ## 单页兼容命令
 
 ```bash
-node .agents/scripts/automator-smoke.mjs \
+node <mini-runtime-preview-skill-dir>/scripts/automator-smoke.mjs \
+  --project-path <mini-project-root> \
   --ide-port <devtools-service-port> \
   --port <fixed-auto-port> \
   --page /pages/<page>/<page> \

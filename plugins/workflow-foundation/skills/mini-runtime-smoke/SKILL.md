@@ -9,12 +9,10 @@ description: 当需要用现有 miniprogram-automator 烟测脚本验证 TrystOf
 
 ## 仓库常量
 
-- 小程序源码目录：`$HOME/Desktop/TrystOfStars/mini/miniprogram`
-- WeChat DevTools 项目根目录：`$HOME/Desktop/TrystOfStars/mini`
-- skill wrapper：`$HOME/Desktop/TrystOfStars/mini/miniprogram/.agents/scripts/automator-smoke.mjs`
-- 复用会话 wrapper：`$HOME/Desktop/TrystOfStars/mini/miniprogram/.agents/scripts/mini-runtime-suite.mjs`
-- canonical script：`$HOME/Desktop/TrystOfStars/mini/miniprogram/.agents/scripts/automator-smoke.mjs`
-- 复用会话 canonical script：`$HOME/Desktop/TrystOfStars/mini/miniprogram/.agents/scripts/mini-runtime-suite.mjs`
+- 小程序源码目录：`<mini-project-root>/miniprogram`，以当前 cwd、`--project-path` 或 `MINIPROGRAM_PROJECT_PATH` 解析。
+- WeChat DevTools 项目根目录：包含 `project.config.json` 的 `<mini-project-root>`。
+- 单页 smoke script：`node <mini-runtime-preview-skill-dir>/scripts/automator-smoke.mjs`。
+- 复用会话 script：`node <mini-runtime-skill-dir>/scripts/mini-runtime-suite.mjs`。
 - 默认 DevTools CLI：`/Applications/wechatwebdevtools.app/Contents/MacOS/cli`
 
 ## 能力状态
@@ -32,7 +30,7 @@ description: 当需要用现有 miniprogram-automator 烟测脚本验证 TrystOf
 lsof -nP -a -c wechatweb -iTCP -sTCP:LISTEN
 ```
 
-3. 从 `$HOME/Desktop/TrystOfStars/mini/miniprogram` 运行命令，指定固定 automator port 和有意义的截图路径。
+3. 从目标 mini 项目根或 `miniprogram` 目录运行命令；如果 cwd 不在项目内，显式传 `--project-path <mini-project-root>`。不要假设项目在 `$HOME/Desktop/TrystOfStars/mini`。
 4. 检查 stdout：必须看到 websocket connected、relaunch、selector found、可选 tap、screenshot、pageStack 和 `ok`。
 5. 报告成功前必须检查 PNG，确认不是空白或错误页面。
 
@@ -41,7 +39,8 @@ lsof -nP -a -c wechatweb -iTCP -sTCP:LISTEN
 多页面复用优先：
 
 ```bash
-node .agents/scripts/mini-runtime-suite.mjs \
+node <mini-runtime-skill-dir>/scripts/mini-runtime-suite.mjs \
+  --project-path <mini-project-root> \
   --port <fixed-auto-port> \
   --artifact-dir /tmp/<meaningful-run-dir> \
   --timeout 150000 \
@@ -52,7 +51,8 @@ node .agents/scripts/mini-runtime-suite.mjs \
 单页兼容：
 
 ```bash
-node .agents/scripts/automator-smoke.mjs \
+node <mini-runtime-preview-skill-dir>/scripts/automator-smoke.mjs \
+  --project-path <mini-project-root> \
   --ide-port <devtools-service-port> \
   --port <fixed-auto-port> \
   --page /pages/<page>/<page> \
@@ -89,5 +89,5 @@ mini-preview smoke \
 ## 安全规则
 
 - 不要把 build、preview upload 或 deploy 成功当作运行时 smoke 成功。
-- 使用本 skill 时不要修改 `.agents/scripts/automator-smoke.mjs`。
+- 使用本 skill 时不要要求目标项目补齐 `.agents/scripts/automator-smoke.mjs`；runtime CLI 由 workflow-foundation skill 自带。
 - 不要把无关 dirty worktree 文件带入结论、提交或部署。

@@ -9,10 +9,9 @@ description: 当小程序运行时预览需要通过 miniprogram-automator 检�
 
 ## 仓库常量
 
-- 小程序源码目录：`$HOME/Desktop/TrystOfStars/mini/miniprogram`
-- WeChat DevTools 项目根目录：`$HOME/Desktop/TrystOfStars/mini`
-- 当前 smoke wrapper：`$HOME/Desktop/TrystOfStars/mini/miniprogram/.agents/scripts/automator-smoke.mjs`
-- canonical script：`$HOME/Desktop/TrystOfStars/mini/miniprogram/.agents/scripts/automator-smoke.mjs`
+- 小程序源码目录：`<mini-project-root>/miniprogram`，以当前 cwd、`--project-path` 或 `MINIPROGRAM_PROJECT_PATH` 解析。
+- WeChat DevTools 项目根目录：包含 `project.config.json` 的 `<mini-project-root>`。
+- 当前 smoke script：`node <mini-runtime-preview-skill-dir>/scripts/automator-smoke.mjs`
 - 核心会话 skill：`mini-runtime-preview（同一 workflow-foundation 插件内）`
 
 ## 能力状态
@@ -20,7 +19,7 @@ description: 当小程序运行时预览需要通过 miniprogram-automator 检�
 - 当前已可用：agent-loop 会输出 `system`、`pageStack`、`currentPage`，并支持 `readData`、`readStorage`、`assertStorage`。
 - 当前已可用：`readStorage` / `assertStorage` 通过 `wx.getStorageInfoSync` / `wx.getStorageSync` 读取本地 storage，支持 `key` / `keyPattern`、简单 path（如 `[].text`）和 `contains` / `regex` / `equals` / `lengthAtLeast` 等断言。
 - SDK 可用但 CLI 未接入：eval、调用页面方法和更完整的 JSONPath/谓词断言。
-- 目标 CLI 名称：`mini-preview state`。这是未来接口；当前项目本地入口是 `mini-runtime-agent-loop.mjs`。
+- 目标 CLI 名称：`mini-preview state`。这是未来接口；当前入口是 workflow-foundation skill 自带的 `mini-runtime-agent-loop.mjs`。
 
 ## 工作流
 

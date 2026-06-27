@@ -9,12 +9,10 @@ description: 当小程序运行时预览需要多步骤页面流程、element �
 
 ## 仓库常量
 
-- 小程序源码目录：`$HOME/Desktop/TrystOfStars/mini/miniprogram`
-- WeChat DevTools 项目根目录：`$HOME/Desktop/TrystOfStars/mini`
-- agent-loop workflow wrapper：`$HOME/Desktop/TrystOfStars/mini/miniprogram/.agents/scripts/mini-runtime-agent-loop.mjs`
-- agent-loop canonical script：`$HOME/Desktop/TrystOfStars/mini/miniprogram/.agents/scripts/mini-runtime-agent-loop.mjs`
-- 当前 smoke wrapper：`$HOME/Desktop/TrystOfStars/mini/miniprogram/.agents/scripts/automator-smoke.mjs`
-- canonical script：`$HOME/Desktop/TrystOfStars/mini/miniprogram/.agents/scripts/automator-smoke.mjs`
+- 小程序源码目录：`<mini-project-root>/miniprogram`，以当前 cwd、`--project-path` 或 `MINIPROGRAM_PROJECT_PATH` 解析。
+- WeChat DevTools 项目根目录：包含 `project.config.json` 的 `<mini-project-root>`。
+- agent-loop workflow script：`node <mini-runtime-skill-dir>/scripts/mini-runtime-agent-loop.mjs`
+- 当前 smoke script：`node <mini-runtime-preview-skill-dir>/scripts/automator-smoke.mjs`
 - 核心会话 skill：`mini-runtime-preview（同一 workflow-foundation 插件内）`
 
 ## 能力状态
@@ -60,9 +58,10 @@ description: 当小程序运行时预览需要多步骤页面流程、element �
 启动 workflow：
 
 ```bash
-node .agents/scripts/mini-runtime-agent-loop.mjs \
+node <mini-runtime-skill-dir>/scripts/mini-runtime-agent-loop.mjs \
   --goal '<runtime 验收目标>' \
   --strategy business-flow \
+  --project-path <mini-project-root> \
   --ide-port <devtools-service-port> \
   --port <fixed-auto-port> \
   --artifact-dir /tmp/<meaningful-run-dir>
@@ -99,9 +98,10 @@ node .agents/scripts/mini-runtime-agent-loop.mjs \
 也可以把上述步骤写成 JSON 或 JSONL recipe 后直接运行：
 
 ```bash
-node .agents/scripts/mini-runtime-agent-loop.mjs \
+node <mini-runtime-skill-dir>/scripts/mini-runtime-agent-loop.mjs \
   --goal '<runtime 验收目标>' \
   --strategy business-flow \
+  --project-path <mini-project-root> \
   --ide-port <devtools-service-port> \
   --port <fixed-auto-port> \
   --artifact-dir /tmp/<meaningful-run-dir> \
@@ -111,7 +111,8 @@ node .agents/scripts/mini-runtime-agent-loop.mjs \
 ## 兼容命令模式
 
 ```bash
-node .agents/scripts/automator-smoke.mjs \
+node <mini-runtime-preview-skill-dir>/scripts/automator-smoke.mjs \
+  --project-path <mini-project-root> \
   --ide-port <devtools-service-port> \
   --port <fixed-auto-port> \
   --page /pages/<page>/<page> \
@@ -156,6 +157,6 @@ mini-preview action \
 ## 安全规则
 
 - 不要发明 app 路由或后端契约；先读源码，不明确就问。
-- 不要为了单次验收修改 canonical smoke 或 suite 脚本。
+- 不要为了单次验收修改 skill 自带的 smoke、suite 或 agent-loop 脚本。
 - 不要把一次性的 `/tmp` probe 当作已封装的正式 CLI 能力。
 - 不要把业务失败通过改链路、改 selector 或直接 reLaunch 目标页掩盖掉。
