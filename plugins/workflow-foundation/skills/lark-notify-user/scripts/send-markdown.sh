@@ -13,6 +13,7 @@ recipient_value=""
 markdown=""
 idempotency_key=""
 identity="bot"
+max_idempotency_key_length=50
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -47,6 +48,11 @@ done
 
 if [[ -z "$recipient_flag" || -z "$recipient_value" || -z "$markdown" ]]; then
   usage
+  exit 2
+fi
+
+if [[ ${#idempotency_key} -gt $max_idempotency_key_length ]]; then
+  echo "idempotency key is too long: ${#idempotency_key} > ${max_idempotency_key_length}" >&2
   exit 2
 fi
 

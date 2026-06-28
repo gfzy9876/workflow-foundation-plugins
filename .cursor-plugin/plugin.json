@@ -2,7 +2,7 @@
   "name": "workflow-foundation",
   "displayName": "工作流基础技能集",
   "description": "TrystOfStars 业务工作流技能集：安全 git 提交、Chrome MCP 浏览器证据采集、小程序运行时验证、CloudRun 部署与日志、云函数部署、admin 部署、飞书通知、结构化 trace、工作流运行态。Use when committing code, validating mini-program runtime behavior, deploying express_star, diagnosing CloudRun logs, capturing browser evidence, sending Lark notifications, or managing workflow state.",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "author": {
     "name": "Ying Zhang"
   },

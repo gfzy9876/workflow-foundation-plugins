@@ -1,6 +1,6 @@
 {
   "name": "workflow-foundation",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "面向 Codex 工作流与 TrystOfStars 运维场景的可复用技能集，覆盖安全提交、浏览器证据采集、工作流运行态、结构化 trace、小程序运行时验证、express_star CloudRun 部署与日志、express_star 云函数部署、admin 部署、飞书 CLI 工作流和飞书用户通知。",
   "author": {
     "name": "Ying Zhang"

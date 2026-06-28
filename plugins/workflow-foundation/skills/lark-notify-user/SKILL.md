@@ -52,7 +52,7 @@ user open_id: ou_e71b5467bf7448ccb530030b0a8b6a66
 参数：
 - `--user-id ou_xxx` 或 `--chat-id oc_xxx`：二选一，指定接收方。
 - `--markdown TEXT`：必填，使用真实换行组织内容。
-- `--idempotency-key KEY`：可选，自动化和重试场景使用，避免重复发送。
+- `--idempotency-key KEY`：可选，自动化和重试场景使用，避免重复发送；长度必须不超过 50 个字符。
 - `--as bot|user`：可选，默认 `bot`。
 
 消息格式要求：
@@ -72,11 +72,12 @@ user open_id: ou_e71b5467bf7448ccb530030b0a8b6a66
 参数：
 - `--user-id ou_xxx` 或 `--chat-id oc_xxx`：二选一，指定接收方。
 - `--image PATH`：必填，本地图片文件路径，或 `lark-cli` 支持的 `image_key`。
-- `--idempotency-key KEY`：可选，自动化和重试场景使用，避免重复发送。
+- `--idempotency-key KEY`：可选，自动化和重试场景使用，避免重复发送；长度必须不超过 50 个字符。
 - `--as bot|user`：可选，默认 `bot`。
 
 典型场景：
 - mini 小程序预览部署成功后，若存在 `.mp-ci/preview-latest.jpg`，在 Markdown 成功通知之后追加发送这张二维码图片。
+- 发送本地图片时，脚本会先用 `lark-cli im images create --data '{"image_type":"message"}' --file image=<path>` 上传得到 `image_key`，再发送图片消息，避免漏传 `image_type`。
 - 用户明确提供公开图片 URL 时，可以在 Markdown 里引用该 URL；如果 URL 不稳定、需要鉴权或来自本地文件，先下载到本地再用 `--image`。
 - 用户提供 base64 图片时，不要直接把 base64 塞进 Markdown、text 或 `--content`；先解码成临时本地图片文件，再用 `--image <file>`。当前 `lark-cli im +messages-send` 没有直接的 base64 图片参数，飞书消息最终需要图片资源而不是内联 base64。
 
@@ -124,5 +125,7 @@ lark-cli auth login --scope "contact:user.base:readonly"
 - `230013 Bot has NO availability to this user`：目标用户不在应用机器人可用范围内。把用户加入可用范围并发布应用。
 - `230027 Lack of necessary permissions`：缺少发消息权限。到开发者后台补充 IM 发消息 scope，并按需发布/审批。
 - `need_user_authorization`：user 身份操作需要运行 `lark-cli auth login --scope "<missing-scope>"` 完成授权。
+- `99992402 field validation failed`：常见原因是 `--idempotency-key` 太长。该参数会映射到消息接口的 `uuid` 字段，控制在 50 字符以内。
+- `234001 Invalid request param`：本地图片上传通常是缺少 `image_type=message`。优先使用 `scripts/send-image.sh`，不要直接裸调缺字段的上传命令。
 
 如果 `lark-cli` 输出 `_notice.update`，在完成通知任务后顺带提示版本更新；不要让更新提示干扰发送结果判断。
