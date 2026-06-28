@@ -45,42 +45,40 @@ user open_id: ou_e71b5467bf7448ccb530030b0a8b6a66
 
 ## 发送通知
 
-优先先发送简短纯文本通知：
+默认发送 Markdown 通知，让用户在飞书里看到结构化内容，而不是一坨 JSON、schema 字符串或带 `\n` 的转义文本。
 
-```bash
-lark-cli im +messages-send \
-  --user-id ou_e71b5467bf7448ccb530030b0a8b6a66 \
-  --text "Codex 通知：任务已完成。" \
-  --as bot
-```
+脚本入口：`scripts/send-markdown.sh`
 
-发送到会话/群：
+参数：
+- `--user-id ou_xxx` 或 `--chat-id oc_xxx`：二选一，指定接收方。
+- `--markdown TEXT`：必填，使用真实换行组织内容。
+- `--idempotency-key KEY`：可选，自动化和重试场景使用，避免重复发送。
+- `--as bot|user`：可选，默认 `bot`。
 
-```bash
-lark-cli im +messages-send \
-  --chat-id oc_xxx \
-  --text "Codex 通知：任务已完成。" \
-  --as bot
-```
+消息格式要求：
+- 用 `--markdown` 作为默认发送方式；只有内容极短或 Markdown 失败时才退回 `--text`。
+- 标题第一行用粗体，例如 `**Codex 通知：部署完成**`。
+- 正文用 2 到 5 条短项目符号说明关键信息：对象、结果、证据、后续动作。
+- 不要把工具返回 JSON、schema、堆栈、完整日志直接塞进消息；只摘取用户需要看的字段。
+- 不要发送包含字面量 `\n` 的转义字符串；需要换行时传真实换行。
+- 成功通知控制在一屏内；失败通知只放错误摘要和下一步，长日志留在 Codex 回复或文件里。
 
-发送 Markdown/富文本：
+## 可选图片附件
 
-```bash
-lark-cli im +messages-send \
-  --user-id ou_xxx \
-  --markdown "**Codex 通知**\n\n任务已完成。" \
-  --as bot
-```
+当任务产物包含需要用户直接查看的图片时，优先用 `--image <local-path>` 发送本地图片文件，不要为了发图额外上传到业务服务器或构造远端 URL。
 
-可重试的自动化流程应使用 `--idempotency-key`，避免重复发送：
+脚本入口：`scripts/send-image.sh`
 
-```bash
-lark-cli im +messages-send \
-  --user-id ou_xxx \
-  --text "Codex 通知：部署完成。" \
-  --idempotency-key "codex-deploy-<repo>-<commit>" \
-  --as bot
-```
+参数：
+- `--user-id ou_xxx` 或 `--chat-id oc_xxx`：二选一，指定接收方。
+- `--image PATH`：必填，本地图片文件路径，或 `lark-cli` 支持的 `image_key`。
+- `--idempotency-key KEY`：可选，自动化和重试场景使用，避免重复发送。
+- `--as bot|user`：可选，默认 `bot`。
+
+典型场景：
+- mini 小程序预览部署成功后，若存在 `.mp-ci/preview-latest.jpg`，在 Markdown 成功通知之后追加发送这张二维码图片。
+- 用户明确提供公开图片 URL 时，可以在 Markdown 里引用该 URL；如果 URL 不稳定、需要鉴权或来自本地文件，先下载到本地再用 `--image`。
+- 用户提供 base64 图片时，不要直接把 base64 塞进 Markdown、text 或 `--content`；先解码成临时本地图片文件，再用 `--image <file>`。当前 `lark-cli im +messages-send` 没有直接的 base64 图片参数，飞书消息最终需要图片资源而不是内联 base64。
 
 ## 获取用户 ID
 
