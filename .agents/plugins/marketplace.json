@@ -8,7 +8,7 @@
       "name": "workflow-foundation",
       "source": {
         "source": "local",
-        "path": "./plugins/workflow-foundation"
+        "path": "."
       },
       "policy": {
         "installation": "AVAILABLE",

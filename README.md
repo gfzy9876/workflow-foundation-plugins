@@ -1,6 +1,6 @@
 # Workflow Foundation Plugins
 
-这是一个 Codex / Cursor 可复用插件仓库，用于分发 `workflow-foundation` 工作流技能集。
+这是一个 Codex / Cursor 可复用插件仓库，用于分发 `workflow-foundation` 工作流技能集。插件本体位于仓库根目录，Cursor 可直接读取 `.cursor-plugin/plugin.json` 与 `skills/`。
 
 当前插件包含：
 
@@ -29,7 +29,7 @@ codex plugin marketplace upgrade
 
 ## Cursor 安装
 
-Cursor 使用仓库根目录的 `.cursor-plugin/plugin.json`。安装或更新时请使用当前 GitHub 仓库：
+Cursor 使用仓库根目录的 `.cursor-plugin/plugin.json` 与 `skills/`。安装或更新时请使用当前 GitHub 仓库：
 
 ```text
 https://github.com/gfzy9876/workflow-foundation-plugins
