@@ -1,6 +1,6 @@
 ---
 name: git-commit-convention
-description: "Use when Codex needs to commit changes with the existing git CLI, especially when the user says 提交, git提交, commit, 提交当前改动, 部署+提交, or asks to preserve current changes before audit. Enforces safe status/diff inspection, risk screening, narrow staging, no empty commits, multi-repo separation, and the required commit message format: title plus numbered 主要改动 description."
+description: "当 Codex 需要使用现有 git CLI 提交改动时使用，尤其是用户说 提交、git提交、commit、提交当前改动、部署+提交，或要求在审计前保留当前改动时。要求执行安全的 status/diff 检查、风险筛查、窄范围 staging、禁止空提交、多仓库边界隔离，并使用必需的提交信息格式：标题加编号的主要改动说明。"
 ---
 
 # Git Commit Convention

@@ -9,6 +9,7 @@ const cloudbasercPath = path.join(rootDir, "cloudbaserc.json");
 
 const runtimeEnvKeys = [
   "ENV_ID",
+  "FEISHU_ALERT_WEBHOOK",
   "STAR_VIRTUAL_NOTIFY_RELAY_TARGET",
   "STAR_VIRTUAL_NOTIFY_TOKEN",
   "WECHAT_MESSAGE_TOKEN",
@@ -27,6 +28,7 @@ const runtimeEnvKeys = [
   "STAR_VIRTUAL_APPKEY_PROD",
   "STAR_VIRTUAL_ENV",
 ];
+const pingSupportedFunctions = new Set(["star-virtual-notify-relay"]);
 
 function readDotEnv(filePath) {
   if (!fs.existsSync(filePath)) return {};
@@ -205,7 +207,11 @@ function main() {
         }
       }
       if (!skipInvoke) {
-        run("tcb", ["fn", "invoke", fn.name, "-e", envId, "--params", "{\"action\":\"ping\"}"], { cwd: tempRoot });
+        if (pingSupportedFunctions.has(fn.name)) {
+          run("tcb", ["fn", "invoke", fn.name, "-e", envId, "--params", "{\"action\":\"ping\"}"], { cwd: tempRoot });
+        } else {
+          console.log(`[express_star] skip invoke ${fn.name}: no safe ping action`);
+        }
       }
     }
     run("tcb", ["fn", "list", "-e", envId, "-l", "100"], { cwd: tempRoot });

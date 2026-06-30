@@ -1,6 +1,6 @@
 ---
 name: chrome-mcp-workflow
-description: "Use when Codex should operate an existing Chrome MCP/Chrome CLI browser workflow from the command line: opening or switching pages, navigating, taking snapshots, getting nodes/uids, clicking, filling inputs, typing, pressing keys, taking screenshots, reading console logs, inspecting network requests, or collecting page evidence for testing. Use this for chrome-mcp, chrome-cli, 页面调用, 页面状态采集, 获取node, 点击, 输入, 截图, 抓接口, console, network, and browser acceptance checks."
+description: "当 Codex 需要通过命令行操作现有 Chrome MCP/Chrome CLI 浏览器工作流时使用：打开或切换页面、导航、获取页面快照、获取 node/uid、点击、填写输入框、键盘输入、按键、截图、读取 console 日志、检查 network 请求，或为测试采集页面证据。适用于 chrome-mcp、chrome-cli、页面调用、页面状态采集、获取 node、点击、输入、截图、抓接口、console、network 和浏览器验收检查。"
 ---
 
 # Chrome MCP Workflow

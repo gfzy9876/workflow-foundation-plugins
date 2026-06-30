@@ -1,6 +1,6 @@
 ---
 name: tryst-lark-cli
-description: Use for TrystOfStars business workflows that write, update, search, or synchronize release notes, deploy evidence, audit conclusions, status reports, or operational records through `lark-cli` into Lark/Feishu Docs, Sheets, Drive, Wiki, or Base.
+description: "用于通过 `lark-cli` 将 TrystOfStars 业务流程中的发布说明、部署证据、审计结论、状态报告或运维记录写入、更新、搜索或同步到飞书/Lark Docs、Sheets、Drive、Wiki 或 Base。"
 ---
 
 # Tryst Lark CLI

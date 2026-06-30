@@ -25,6 +25,13 @@ fi
 
 echo "[express_star] dev cloud functions deploy target:"
 echo "  ENV_ID=$ENV_ID"
-echo "  FUNCTIONS=${*:-star-virtual-notify-relay}"
+if [[ "$#" -gt 0 ]]; then
+  FUNCTIONS="$*"
+else
+  FUNCTIONS="$(
+    node -e "const c=require('./cloudbaserc.json'); process.stdout.write((c.functions||[]).map((f)=>f.name).join(',') || '(none)');"
+  )"
+fi
+echo "  FUNCTIONS=$FUNCTIONS"
 
 exec node "$SCRIPT_DIR/deploy-cloudfunctions.cjs" "$@"

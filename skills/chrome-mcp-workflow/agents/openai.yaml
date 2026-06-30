@@ -1,4 +1,4 @@
 interface:
-  display_name: "Chrome MCP Workflow"
-  short_description: "Use Chrome MCP CLI for page testing"
-  default_prompt: "Use $chrome-mcp-workflow to open a page, inspect state, interact with elements, and collect browser evidence."
+  display_name: "Chrome MCP 工作流"
+  short_description: "使用 Chrome MCP CLI 做页面测试"
+  default_prompt: "使用 $chrome-mcp-workflow 打开页面、检查状态、操作元素并采集浏览器证据。"

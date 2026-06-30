@@ -1,4 +1,4 @@
 interface:
-  display_name: "Tryst Lark CLI"
-  short_description: "Run Tryst business workflows through lark-cli"
-  default_prompt: "Use $tryst-lark-cli to sync Tryst release, audit, or status information into Lark documents or sheets."
+  display_name: "Tryst 飞书 CLI"
+  short_description: "通过 lark-cli 执行 Tryst 业务工作流"
+  default_prompt: "使用 $tryst-lark-cli 将 Tryst 发布、审计或状态信息同步到飞书文档或表格。"

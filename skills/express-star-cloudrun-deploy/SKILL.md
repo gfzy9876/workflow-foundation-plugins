@@ -1,6 +1,6 @@
 ---
 name: express-star-cloudrun-deploy
-description: Deploy TrystOfStars express_star CloudBase CloudRun container service via skill-owned scripts. Use when the user says express_star 部署, 云托管部署, CloudRun deploy, backend deploy, or asks to deploy the express_star main backend service. Do not use for CloudBase cloud functions; use express-star-cloudfunctions-deploy for cloudfunctions/star-virtual-notify-relay.
+description: "通过 skill 自带脚本部署 TrystOfStars `express_star` CloudBase CloudRun 容器服务。用户说 express_star 部署、云托管部署、CloudRun deploy、backend deploy，或要求部署 express_star 主后端服务时使用。不要用于 CloudBase 云函数；云函数部署使用 express-star-cloudfunctions-deploy，覆盖 cloudfunctions/star-virtual-notify-relay。"
 ---
 
 # express_star CloudRun 部署

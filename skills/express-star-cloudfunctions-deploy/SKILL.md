@@ -1,6 +1,6 @@
 ---
 name: express-star-cloudfunctions-deploy
-description: Deploy TrystOfStars express_star CloudBase cloud functions via the repo-local fixed script. Use when the user asks to deploy 云开发, 云函数, CloudBase functions, star-virtual-notify-relay, or says express_star 云开发部署 / 后端云函数部署. This skill is only for the express_star CloudBase cloud-function surface, not CloudRun container deploys.
+description: "通过仓库本地固定脚本部署 TrystOfStars `express_star` CloudBase 云函数。用户要求部署 云开发、云函数、CloudBase functions、star-virtual-notify-relay、monitor-alert，或说 express_star 云开发部署 / 后端云函数部署时使用。此 skill 仅用于 `express_star` 的 CloudBase 云函数，不用于 CloudRun 容器部署。"
 ---
 
 # express_star 云函数部署
@@ -41,6 +41,7 @@ To deploy one function explicitly:
 
 ```bash
 ./scripts/deploy.sh star-virtual-notify-relay
+./scripts/deploy.sh monitor-alert
 ```
 
 The wrapper loads `.env.local` or `EXPRESS_STAR_ENV_FILE`, sets `ENV_ID`, and runs the skill-owned `scripts/deploy-cloudfunctions.cjs`. The script reads the `express_star` repo through `EXPRESS_STAR_ROOT`, generates a temporary `cloudbaserc.json`, and runs `tcb fn deploy <name> -e <ENV_ID> --force --yes`.
@@ -51,12 +52,14 @@ By default it preserves remote function environment variables. To sync local run
 EXPRESS_STAR_SYNC_CLOUDFUNCTION_ENV=1 ./scripts/deploy.sh
 ```
 
-4. Treat deployment as complete only after the script reaches remote invocation and list verification:
+4. Treat deployment as complete only after the script reaches safe remote invocation and list verification:
 
 ```text
-tcb fn invoke <name> -e <ENV_ID> --params '{"action":"ping"}'
+tcb fn invoke star-virtual-notify-relay -e <ENV_ID> --params '{"action":"ping"}'
 tcb fn list -e <ENV_ID> -l 100
 ```
+
+`monitor-alert` has no dry-run ping action; the wrapper skips invoke for it. Manual invoke runs the real alert calculation and may send Feishu alerts when thresholds are met.
 
 Do not run `tcb fn detail` in the normal path because it prints cloud-function environment variables. For focused debugging only, use:
 
@@ -92,10 +95,16 @@ STAR_VIRTUAL_APPKEY_PROD
 STAR_VIRTUAL_ENV
 ```
 
+For `monitor-alert`, keep this runtime variable configured remotely, or available locally only when explicitly syncing function env:
+
+```text
+FEISHU_ALERT_WEBHOOK
+```
+
 Never write these secrets into committed files. When `EXPRESS_STAR_SYNC_CLOUDFUNCTION_ENV=1` is set, the script copies them into a temp deploy config only.
 
 ## Failure Handling
 
 - If `tcb` is unauthenticated, run `tcb login` and retry once.
-- If deployment succeeds but `invoke {"action":"ping"}` fails, inspect `tcb fn detail` and `tcb fn log <name> -e <ENV_ID>`.
+- If `star-virtual-notify-relay` deployment succeeds but `invoke {"action":"ping"}` fails, inspect `tcb fn detail` and `tcb fn log <name> -e <ENV_ID>`.
 - If CloudRun behavior is involved, switch back to the CloudRun deploy/verify flow; do not debug it as a cloud function.

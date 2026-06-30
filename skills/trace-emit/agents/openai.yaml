@@ -1,4 +1,4 @@
 interface:
-  display_name: "Trace Emit"
-  short_description: "Structured atomic trace event design"
-  default_prompt: "Use $trace-emit to design or validate structured trace emission events."
+  display_name: "Trace Emit 设计"
+  short_description: "设计结构化原子 trace 事件"
+  default_prompt: "使用 $trace-emit 设计或校验结构化 trace 事件发送。"
